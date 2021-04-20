@@ -1,4 +1,4 @@
-# NgEventSchedule
+# NgEventSchedule [![npm version](https://img.shields.io/npm/v/ng-event-schedule.svg?style=flat-square)](https://www.npmjs.com/package/ng-event-schedule) 
 
 NgEventSchedule is a fully responsive Angular component that displays an event calendar for the day.
 
