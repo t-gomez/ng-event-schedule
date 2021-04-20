@@ -1,27 +1,124 @@
 # NgEventSchedule
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.8.
+NgEventSchedule is a fully responsive Angular component that displays an event calendar for the day.
 
-## Development server
+[![Demo Screenshot][preview-screenshot]](https://ng-event-schedule-demo.vercel.app/)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+[preview-screenshot]: images/demo.png
 
-## Code scaffolding
+Built with Tailwind CSS and moment.js
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+[Live Demo](https://ng-event-schedule-demo.vercel.app/)
 
-## Build
+## Installation
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+```shell
+npm install --save ng-event-schedule
+```
 
-## Running unit tests
+## Link assets
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+In `angular.json`
+```json
+"architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            ...
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/ng-event-schedule/assets/",
+                "output": "./assets/"
+              }
+            ],
+            ...
+```
 
-## Running end-to-end tests
+## Getting Started
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Import `NgEventScheduleModule` in your root application module:
 
-## Further help
+```typescript
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgEventScheduleModule } from 'ng-event-schedule';
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+
+@NgModule({
+    imports: [
+        // ...
+        NgEventScheduleModule
+    ],
+})
+export class AppModule { }
+```
+
+Insert `ng-event-schedule` component in your template:
+
+```html
+<ng-event-schedule
+    [columns]="columns"
+    [startHour]="startHour"
+    [endHour]="endHour">
+</ng-event-schedule>
+```
+
+Note: Tailwind CSS must be set up on your app for styles to display correctly.
+
+
+## Options
+
+| Option | Required | Default | Description |
+| ---- | ---- | ---- | ---- |
+| columns | Required | null | An array of `ICalendarColumn` objects, these are the columns that will be displayed with its corresponding items|
+| startHour | Required | null | The start hour of the calendar. |
+| endHour | Required | null | The end hour of the calendar. |
+| cellHeight | Optional | '5rem' | The height of each calendar cell, supports any format supported on CSS syntax. (px, rem, em, vh, etc.) |
+| gridGap | Optional | '0.125rem' | The gap between each calendar cell, supports any format supported on CSS syntax. (px, rem, em, vh, etc.) |
+| columnBreakpoints | Optional | Detailed below | An object of type `{ [number]: number }` where the key is the breakpoint (px) and the value is the amount of columns shown for that particular breakpoint
+
+### Default column count breakpoints
+```typescript
+{
+    400: 1,
+    640: 1,
+    768: 2,
+    1024: 2,
+    1280: 3,
+    1440: 4,
+    1535: 4,
+    1780: 5,
+    2080: 6
+}
+```
+
+## Events
+
+| Event | Description | Output |
+| ---- | ---- | ---- |
+| selectItem | Triggered when one of the items is clicked | ICalendarItem |
+| selectCell | Triggered when a calendar cell is clicked | ICalendarCell |
+
+`ICalendarItem`
+```typescript
+{
+    title: string,
+    description?: string,
+    start: moment.Moment | string,
+    end: moment.Moment | string
+}
+```
+
+`ICalendarCell`
+```typescript
+{
+    column: number,
+    columnTitle: string,
+    hours: number
+}
+```
