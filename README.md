@@ -43,11 +43,7 @@ Import `NgEventScheduleModule` in your root application module:
 
 ```typescript
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { NgEventScheduleModule } from 'ng-event-schedule';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 
 @NgModule({
     imports: [
